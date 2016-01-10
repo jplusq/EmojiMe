@@ -57,6 +57,7 @@ namespace Q.EmojiMe.Display
         //AWS IoT Shadow
         private AmazonIotDataClient _client = new AmazonIotDataClient("AKIAIQY2CL3IGCLEHESQ", "2AGk/SrDhtkZoOXpMuNJElRphrBWS08AHQ43+cfb", "https://A3COFSWG6X9L5X.iot.ap-northeast-1.amazonaws.com");
         private const string UPDATE_JSON_TEMPLATE = "{{\"state\":{{\"{0}\": {{\"code\":\"{1}\"}}}}}}";
+        private const string CONNECT_JSON_TEMPLATE = "{{\"state\":{{\"reported\": {{\"connected\":{0}}}}}}}";
         private static Regex _deltaRgx = new Regex("\"delta\":{\"code\":\"(?<code>.+)\"}");
 
         //Timer
@@ -72,21 +73,33 @@ namespace Q.EmojiMe.Display
             // described in http://aka.ms/backgroundtaskdeferral
             //
             _deferral = taskInstance.GetDeferral();
+            taskInstance.Canceled += TaskInstance_Canceled;
 
             //initialize
             InitDisplay().Wait();
 
+            Connect("OLED1", true).Wait();
+            Connect("OLED2", true).Wait();
+
             //
-            _timer = ThreadPoolTimer.CreatePeriodicTimer(Polling, TimeSpan.FromMilliseconds(2000));
+            _timer = ThreadPoolTimer.CreatePeriodicTimer(Polling, TimeSpan.FromMilliseconds(1000));
+        }
+
+        private void TaskInstance_Canceled(IBackgroundTaskInstance sender, BackgroundTaskCancellationReason reason)
+        {
+            Connect("OLED1", false).Wait();
+            Connect("OLED2", false).Wait();
+            // Handle cancellation
+            _deferral.Complete();
         }
 
         #region display delta
         private void Polling(ThreadPoolTimer timer)
         {
-            DisplayDelta(0);
-            DisplayDelta(1);
+            DisplayDelta(0).Wait();
+            DisplayDelta(1).Wait();
         }
-        private async void DisplayDelta(int idx)
+        private async Task DisplayDelta(int idx)
         {
             Debug.WriteLine("display " + idx);
             string deviceName = idx == 0 ? "OLED1" : "OLED2";
@@ -95,7 +108,7 @@ namespace Q.EmojiMe.Display
             if (!string.IsNullOrEmpty(emoji))
             {
                 ShowEmoji(idx, emoji);
-                Update(deviceName, emoji);
+                await Update(deviceName, emoji);
             }
         }
         #endregion
@@ -117,13 +130,29 @@ namespace Q.EmojiMe.Display
                     ds.DrawText(emoji, 0, 0, SSD1603.ForeColor, fmt);
                 }
 
+                Debug.WriteLine("display " + emoji);
                 display.Display();
             }
         }
         #endregion
 
         #region IoT shadow
-        private async void Update(string thingName, string emoji, bool isDesired = false)
+        private async Task Connect(string thingName, bool isConnected)
+        {
+            try
+            {
+                string jsonStr = string.Format(CONNECT_JSON_TEMPLATE, isConnected ? "true" : "false");
+                UpdateThingShadowRequest req = new UpdateThingShadowRequest();
+                req.ThingName = thingName;
+                req.Payload = new MemoryStream(Encoding.UTF8.GetBytes(jsonStr));
+                UpdateThingShadowResponse res = await _client.UpdateThingShadowAsync(req);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+        private async Task Update(string thingName, string emoji, bool isDesired = false)
         {
             try
             {

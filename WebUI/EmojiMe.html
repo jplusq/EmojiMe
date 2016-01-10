@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Emoji Me</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            padding: 5px 10px 10px 10px;
+        }
+
+        .align-center {
+            text-align: center;
+        }
+
+        .emoji {
+            font-family: Segoe UI Emoji;
+        }
+
+            .emoji.bg {
+                font-size: 60px;
+                line-height: 65px;
+                margin-bottom: 20px;
+            }
+
+            .emoji.sm {
+                font-size: 30px;
+                cursor: pointer;
+            }
+
+        .state {
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+            .state.on {
+                color: green;
+            }
+
+            .state.off {
+                color: red;
+            }
+    </style>
+</head>
+<body>
+    <h4 style="text-align:center">Emoji Me</h4>
+    <ul class="nav nav-tabs" id="tabOled">
+        <li role="presentation" class="active"><a href="#" deviceName="OLED1">OLED 1</a></li>
+        <li role="presentation"><a href="#" deviceName="OLED2">OLED 2</a></li>
+    </ul>
+    <div class="row">
+        <div class="col-xs-4 align-center">State</div>
+        <div class="col-xs-4 align-center">Displayed</div>
+        <div class="col-xs-4 align-center">Selected</div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4 align-center state off">OFF</div>
+        <div class="col-xs-4 emoji bg align-center displayed"></div>
+        <div class="col-xs-4 emoji bg align-center selected"></div>
+    </div>
+    <div class="row option">
+        <div class="col-xs-2 emoji sm align-center">😀</div>
+        <div class="col-xs-2 emoji sm align-center">😂</div>
+        <div class="col-xs-2 emoji sm align-center">😄</div>
+        <div class="col-xs-2 emoji sm align-center">😋</div>
+        <div class="col-xs-2 emoji sm align-center">😈</div>
+        <div class="col-xs-2 emoji sm align-center">😇</div>
+    </div>
+    <div class="row option">
+        <div class="col-xs-2 emoji sm align-center">😍</div>
+        <div class="col-xs-2 emoji sm align-center">😠</div>
+        <div class="col-xs-2 emoji sm align-center">😎</div>
+        <div class="col-xs-2 emoji sm align-center">😮</div>
+        <div class="col-xs-2 emoji sm align-center">😷</div>
+        <div class="col-xs-2 emoji sm align-center">😶</div>
+    </div>
+    <div class="row option">
+        <div class="col-xs-2 emoji sm align-center">🍏</div>
+        <div class="col-xs-2 emoji sm align-center">🍒</div>
+        <div class="col-xs-2 emoji sm align-center">🍓</div>
+        <div class="col-xs-2 emoji sm align-center">🍑</div>
+        <div class="col-xs-2 emoji sm align-center">🍔</div>
+        <div class="col-xs-2 emoji sm align-center">🍕</div>
+    </div>
+    <div class="row option">
+        <div class="col-xs-2 emoji sm align-center">🍗</div>
+        <div class="col-xs-2 emoji sm align-center">🍙</div>
+        <div class="col-xs-2 emoji sm align-center">🍚</div>
+        <div class="col-xs-2 emoji sm align-center">🍜</div>
+        <div class="col-xs-2 emoji sm align-center">🍟</div>
+        <div class="col-xs-2 emoji sm align-center">🍰</div>
+    </div>
+    <div class="row option">
+        <div class="col-xs-2 emoji sm align-center">👑</div>
+        <div class="col-xs-2 emoji sm align-center">👓</div>
+        <div class="col-xs-2 emoji sm align-center">☂</div>
+        <div class="col-xs-2 emoji sm align-center">👒</div>
+        <div class="col-xs-2 emoji sm align-center">👙</div>
+        <div class="col-xs-2 emoji sm align-center">👜</div>
+    </div>
+    <div class="row option">
+        <div class="col-xs-2 emoji sm align-center">💤</div>
+        <div class="col-xs-2 emoji sm align-center">💕</div>
+        <div class="col-xs-2 emoji sm align-center">💔</div>
+        <div class="col-xs-2 emoji sm align-center">💣</div>
+        <div class="col-xs-2 emoji sm align-center">💰</div>
+        <div class="col-xs-2 emoji sm align-center">💓</div>
+    </div>
+</body>
+</html>
+<script>
+    var _selectedDevName = "OLED1";
+    var _isOnline = true;
+    var _$displayed, _$selected, _$state;
+    $(function () {
+        _$displayed = $(".displayed");
+        _$selected = $(".selected");
+        _$state = $(".state");
+        $('#tabOled a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+            _selectedDevName = $(this).attr('deviceName');
+        });
+
+        $(".option div").click(function (e){
+            select($(this).html());
+        });
+
+        setTimeout(update, 1000);
+    });
+
+    function select(emoji) {
+        if (!_isOnline) {
+            return;
+        }
+
+        var url = "http://52.69.69.110/select/" + _selectedDevName + "?callback=?&emoji=" + emoji;
+        $.getJSON(url, function (data) {
+            _$selected.html(data.state.desired.code);
+        });
+    }
+
+    function update() {
+        var url = "http://52.69.69.110/state/" + _selectedDevName + "?callback=?";
+        $.getJSON(url, function (data) {
+
+            _isOnline = data.state.reported.connected;
+            if (_isOnline) {
+                _$state.html("ON");
+                _$state.removeClass("off").addClass("on");
+                _$displayed.html(data.state.reported.code);
+            } else {
+                _$state.html("OFF");
+                _$state.removeClass("on").addClass("off");
+            }
+
+            setTimeout(update, 1000);
+        });
+    }
+</script>
