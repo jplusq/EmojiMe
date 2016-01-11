@@ -272,6 +272,17 @@
           "lib/portable-win8+wpa81/PCLStorage.dll": {}
         }
       },
+      "Q.IoT.Devices.Display/1.0.0": {
+        "dependencies": {
+          "Win2D.uwp": "[1.10.0, )"
+        },
+        "compile": {
+          "lib/.NETCore50/Q.IoT.Devices.Display.dll": {}
+        },
+        "runtime": {
+          "lib/.NETCore50/Q.IoT.Devices.Display.dll": {}
+        }
+      },
       "System.AppContext/4.0.0": {
         "dependencies": {
           "System.Collections": "[4.0.0, )",
@@ -1935,6 +1946,17 @@
         "runtime": {
           "lib/portable-win8+wpa81/PCLStorage.Abstractions.dll": {},
           "lib/portable-win8+wpa81/PCLStorage.dll": {}
+        }
+      },
+      "Q.IoT.Devices.Display/1.0.0": {
+        "dependencies": {
+          "Win2D.uwp": "[1.10.0, )"
+        },
+        "compile": {
+          "lib/.NETCore50/Q.IoT.Devices.Display.dll": {}
+        },
+        "runtime": {
+          "lib/.NETCore50/Q.IoT.Devices.Display.dll": {}
         }
       },
       "System.AppContext/4.0.0": {
@@ -3636,6 +3658,17 @@
         "runtime": {
           "lib/portable-win8+wpa81/PCLStorage.Abstractions.dll": {},
           "lib/portable-win8+wpa81/PCLStorage.dll": {}
+        }
+      },
+      "Q.IoT.Devices.Display/1.0.0": {
+        "dependencies": {
+          "Win2D.uwp": "[1.10.0, )"
+        },
+        "compile": {
+          "lib/.NETCore50/Q.IoT.Devices.Display.dll": {}
+        },
+        "runtime": {
+          "lib/.NETCore50/Q.IoT.Devices.Display.dll": {}
         }
       },
       "System.AppContext/4.0.0": {
@@ -5344,6 +5377,17 @@
           "lib/portable-win8+wpa81/PCLStorage.dll": {}
         }
       },
+      "Q.IoT.Devices.Display/1.0.0": {
+        "dependencies": {
+          "Win2D.uwp": "[1.10.0, )"
+        },
+        "compile": {
+          "lib/.NETCore50/Q.IoT.Devices.Display.dll": {}
+        },
+        "runtime": {
+          "lib/.NETCore50/Q.IoT.Devices.Display.dll": {}
+        }
+      },
       "System.AppContext/4.0.0": {
         "dependencies": {
           "System.Collections": "[4.0.0, )",
@@ -7043,6 +7087,17 @@
         "runtime": {
           "lib/portable-win8+wpa81/PCLStorage.Abstractions.dll": {},
           "lib/portable-win8+wpa81/PCLStorage.dll": {}
+        }
+      },
+      "Q.IoT.Devices.Display/1.0.0": {
+        "dependencies": {
+          "Win2D.uwp": "[1.10.0, )"
+        },
+        "compile": {
+          "lib/.NETCore50/Q.IoT.Devices.Display.dll": {}
+        },
+        "runtime": {
+          "lib/.NETCore50/Q.IoT.Devices.Display.dll": {}
         }
       },
       "System.AppContext/4.0.0": {
@@ -8751,6 +8806,17 @@
           "lib/portable-win8+wpa81/PCLStorage.dll": {}
         }
       },
+      "Q.IoT.Devices.Display/1.0.0": {
+        "dependencies": {
+          "Win2D.uwp": "[1.10.0, )"
+        },
+        "compile": {
+          "lib/.NETCore50/Q.IoT.Devices.Display.dll": {}
+        },
+        "runtime": {
+          "lib/.NETCore50/Q.IoT.Devices.Display.dll": {}
+        }
+      },
       "System.AppContext/4.0.0": {
         "dependencies": {
           "System.Collections": "[4.0.0, )",
@@ -10450,6 +10516,17 @@
         "runtime": {
           "lib/portable-win8+wpa81/PCLStorage.Abstractions.dll": {},
           "lib/portable-win8+wpa81/PCLStorage.dll": {}
+        }
+      },
+      "Q.IoT.Devices.Display/1.0.0": {
+        "dependencies": {
+          "Win2D.uwp": "[1.10.0, )"
+        },
+        "compile": {
+          "lib/.NETCore50/Q.IoT.Devices.Display.dll": {}
+        },
+        "runtime": {
+          "lib/.NETCore50/Q.IoT.Devices.Display.dll": {}
         }
       },
       "System.AppContext/4.0.0": {
@@ -12812,6 +12889,17 @@
         "lib/wp8/PCLStorage.xml",
         "package/services/metadata/core-properties/dba2944eebe04ff298a58a04f2282910.psmdcp",
         "PCLStorage.nuspec"
+      ]
+    },
+    "Q.IoT.Devices.Display/1.0.0": {
+      "sha512": "A+NFypIM3XlDA1Lm2at5Gkhatd2sewC/GGnJiCXdzPWzuVRYvc+q9vqrB9dPsI7k+p4A3nBq1K1dR+/6+19xeA==",
+      "type": "Package",
+      "files": [
+        "[Content_Types].xml",
+        "_rels/.rels",
+        "lib/.NETCore50/Q.IoT.Devices.Display.dll",
+        "package/services/metadata/core-properties/92c3a251cc6d4f828d8e2a96166a0579.psmdcp",
+        "Q.IoT.Devices.Display.nuspec"
       ]
     },
     "System.AppContext/4.0.0": {
@@ -15546,6 +15634,7 @@
     "": [
       "AWSSDK.IotData >= 3.2.1-beta",
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.0.0",
+      "Q.IoT.Devices.Display >= 1.0.0",
       "Win2D.uwp >= 1.13.0"
     ],
     "UAP,Version=v10.0": []

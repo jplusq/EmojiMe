@@ -82,7 +82,7 @@ namespace Q.EmojiMe.Display
             Connect("OLED2", true).Wait();
 
             //
-            _timer = ThreadPoolTimer.CreatePeriodicTimer(Polling, TimeSpan.FromMilliseconds(1000));
+            _timer = ThreadPoolTimer.CreatePeriodicTimer(Polling, TimeSpan.FromMilliseconds(2000));
         }
 
         private void TaskInstance_Canceled(IBackgroundTaskInstance sender, BackgroundTaskCancellationReason reason)
