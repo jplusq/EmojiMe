@@ -55,7 +55,7 @@ namespace Q.EmojiMe.Display
 
 
         //AWS IoT Shadow
-        private AmazonIotDataClient _client = new AmazonIotDataClient("AKIAIQY2CL3IGCLEHESQ", "2AGk/SrDhtkZoOXpMuNJElRphrBWS08AHQ43+cfb", "https://A3COFSWG6X9L5X.iot.ap-northeast-1.amazonaws.com");
+        private AmazonIotDataClient _client = new AmazonIotDataClient("", "", "https://A3COFSWG6X9L5X.iot.ap-northeast-1.amazonaws.com");
         private const string UPDATE_JSON_TEMPLATE = "{{\"state\":{{\"{0}\": {{\"code\":\"{1}\"}}}}}}";
         private const string CONNECT_JSON_TEMPLATE = "{{\"state\":{{\"reported\": {{\"connected\":{0}}}}}}}";
         private static Regex _deltaRgx = new Regex("\"delta\":{\"code\":\"(?<code>.+)\"}");
